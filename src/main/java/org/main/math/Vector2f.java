@@ -1,5 +1,6 @@
 package org.main.math;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Vector2f {
@@ -19,5 +20,10 @@ public class Vector2f {
         }
 
         return Float.compare(this.x, tmp.x) == 0 && Float.compare(this.y, tmp.y) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }
