@@ -1,10 +1,16 @@
 package org.main.reader;
 
+import org.main.math.Vector2f;
+import org.main.math.Vector3f;
 import org.main.model.Model;
+import org.main.reader.exeptions.IncorrectCountOfArgumentsException;
 import org.main.reader.exeptions.IncorrectPathException;
+import org.main.reader.exeptions.ParseVerticesException;
+import org.main.reader.exeptions.TypeOfError;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -33,6 +39,12 @@ public class ObjReader {
                 String token = allWords[0];
                 String[] wordsWithoutToken = Arrays.copyOfRange(allWords, 1, allWords.length);
 
+                switch (token) {
+                    case VERTEX_TOKEN -> model.addVertex(parseVector3f(wordsWithoutToken, lineCount));
+                    case TEXTURE_VERTEX_TOKEN -> model.addTextureVertex(parseVector2f(wordsWithoutToken, lineCount));
+                    case NORMAL_TOKEN -> model.addNormal(parseVector3f(wordsWithoutToken, lineCount));
+                    case FACE_TOKEN -> model.addPolygon();
+                }
 
             }
         } catch (FileNotFoundException e) {
@@ -40,4 +52,41 @@ public class ObjReader {
         }
     }
 
+    private static Vector3f parseVector3f(String[] wordsWithoutToken, int lineIndex) {
+        checkVertexSize(wordsWithoutToken, 3, lineIndex);
+        try {
+            float x = Float.parseFloat(wordsWithoutToken[0]);
+            float y = Float.parseFloat(wordsWithoutToken[1]);
+            float z = Float.parseFloat(wordsWithoutToken[2]);
+
+            return new Vector3f(x, y, z);
+        } catch (NumberFormatException exception) {
+            throw new ParseVerticesException("float", lineIndex);
+        }
+    }
+
+    private static Vector2f parseVector2f(String[] wordsWithoutToken, int lineIndex) {
+        checkVertexSize(wordsWithoutToken, 2, lineIndex);
+        try {
+            float x = Float.parseFloat(wordsWithoutToken[0]);
+            float y = Float.parseFloat(wordsWithoutToken[1]);
+
+            return new Vector2f(x, y);
+        } catch (NumberFormatException exe) {
+            throw new ParseVerticesException("float", lineIndex);
+        }
+    }
+
+    private static void checkVertexSize(String[] wordsWithoutToken, int properSize, int lineIndex) {
+        if (wordsWithoutToken.length == properSize) {
+            return;
+        }
+        if (wordsWithoutToken.length < properSize) {
+            throw new IncorrectCountOfArgumentsException(TypeOfError.FEW_VERTICES, lineIndex);
+        }
+        throw new IncorrectCountOfArgumentsException(TypeOfError.MANY_VERTICES, lineIndex);
+    }
+    private static void processPolygon(String[] wordsWithoutToken, int lineIndex) {
+
+    }
 }
