@@ -1,7 +1,11 @@
 package org.main;
 
+import org.main.model.Model;
+import org.main.reader.ObjReader;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.printf("%d", 33);
+        Model model = ObjReader.readFile("C:\\Материалы ВУЗ\\3й семестр\\КГ\\examples\\CGVSU\\3DModels\\Faceform\\WrapHead.obj");
+        System.out.println();
     }
 }

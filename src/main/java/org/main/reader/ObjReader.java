@@ -47,6 +47,13 @@ public class ObjReader {
         } catch (FileNotFoundException e) {
             throw new IncorrectPathException();
         }
+        int vertexCount = model.getVertexSize();
+        int textureVertexCount = model.getTextureVertexSize();
+        int normalsCount = model.getNormalSize();
+
+        for (Polygon polygon : model.getPolygons()) {
+            polygon.checkIndicesPolygon(vertexCount,textureVertexCount, normalsCount);
+        }
         return model;
     }
 

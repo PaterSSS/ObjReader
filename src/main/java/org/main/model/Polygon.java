@@ -1,5 +1,7 @@
 package org.main.model;
 
+import org.main.reader.exeptions.IncorrectIndexException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,5 +49,23 @@ public class Polygon {
     }
     public boolean hasTextures() {
         return !textureVertexIndices.isEmpty();
+    }
+
+    public void checkIndicesPolygon(int countOfVertex, int countOfTextureVertex, int countOfNormals) {
+        for (Integer item: vertexIndices) {
+            if (item >= countOfVertex) {
+                throw new IncorrectIndexException("vertex", lineIndex);
+            }
+        }
+        for (Integer item: textureVertexIndices) {
+            if (item >= countOfTextureVertex) {
+                throw new IncorrectIndexException("Texture vertex", lineIndex);
+            }
+        }
+        for (Integer item: normalIndices) {
+            if (item >= countOfNormals) {
+                throw new IncorrectIndexException("Normal vertex", lineIndex);
+            }
+        }
     }
 }

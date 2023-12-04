@@ -23,7 +23,7 @@ public class FacePart {
 
         String vertexIndex = vertices[0];
         try {
-            facePart.vertexIndex = Integer.parseInt(vertexIndex);
+            facePart.vertexIndex = Integer.parseInt(vertexIndex) - 1;
             facePart.type = TypeOfPolygon.ONLY_VERTICES;
         } catch (NumberFormatException exe) {
             throw new ParseVerticesException("Integer", lineIndex);
@@ -31,7 +31,7 @@ public class FacePart {
 
         if (vertices.length > 1 && !vertices[1].isEmpty()) {
             try {
-                facePart.textureVertexIndex = Integer.parseInt(vertices[1]);
+                facePart.textureVertexIndex = Integer.parseInt(vertices[1]) - 1;
                 facePart.type = TypeOfPolygon.VERTICES_TEXTURES;
             } catch (NumberFormatException exe) {
                 throw new ParseVerticesException("Integer", lineIndex);
@@ -40,7 +40,7 @@ public class FacePart {
 
         if (vertices.length > 2) {
             try {
-                facePart.normalIndex = Integer.parseInt(vertices[2]);
+                facePart.normalIndex = Integer.parseInt(vertices[2]) - 1;
                 facePart.type = TypeOfPolygon.VERTICES_TEXTURES_NORMALS;
             } catch (NumberFormatException exe) {
                 throw new ParseVerticesException("Integer", lineIndex);

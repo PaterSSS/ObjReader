@@ -36,5 +36,14 @@ public class Model {
     public void addPolygon(Polygon polygon) {
         polygons.add(polygon);
     }
-    
+
+    public int getVertexSize() {
+        return vertices.size();
+    }
+    public int getTextureVertexSize() {
+        return textureVertices.size();
+    }
+    public int getNormalSize() {
+        return normals.size();
+    }
 }
