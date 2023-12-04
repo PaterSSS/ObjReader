@@ -7,6 +7,7 @@ public class Polygon {
     private List<Integer> vertexIndices;
     private List<Integer> textureVertexIndices;
     private List<Integer> normalIndices;
+    private int lineIndex;
 
     public Polygon() {
         vertexIndices = new ArrayList<>();
@@ -32,7 +33,19 @@ public class Polygon {
 
     public List<Integer> getTextureVertexIndices() {
         return textureVertexIndices;
-    }public List<Integer> getNormalIndices() {
+    }
+
+    public List<Integer> getNormalIndices() {
         return normalIndices;
+    }
+
+    public void setLineIndex(int lineIndex) {
+        this.lineIndex = lineIndex;
+    }
+    public int getLineIndex() {
+        return lineIndex;
+    }
+    public boolean hasTextures() {
+        return !textureVertexIndices.isEmpty();
     }
 }

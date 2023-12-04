@@ -10,7 +10,7 @@ public class FacePart {
     private Integer normalIndex;
     private TypeOfPolygon type;
 
-    FacePart parseFacePart(String part, int lineIndex) {
+    static FacePart parseFacePart(String part, int lineIndex) {
         String[] vertices = part.split("/");
         FacePart facePart = new FacePart();
 
@@ -48,7 +48,20 @@ public class FacePart {
         }
         return facePart;
     }
+
     public TypeOfPolygon getType() {
         return type;
+    }
+
+    public Integer getVertexIndex() {
+        return vertexIndex;
+    }
+
+    public Integer getTextureVertexIndex() {
+        return textureVertexIndex;
+    }
+
+    public Integer getNormalIndex() {
+        return normalIndex;
     }
 }
