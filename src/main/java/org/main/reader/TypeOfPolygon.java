@@ -5,3 +5,4 @@ public enum TypeOfPolygon {
     VERTICES_TEXTURES,
     VERTICES_TEXTURES_NORMALS
 }
+//можно заменить енамом флаговым тогда проще будет включать выключать значения.
