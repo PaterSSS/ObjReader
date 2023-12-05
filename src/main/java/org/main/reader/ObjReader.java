@@ -1,6 +1,7 @@
 package org.main.reader;
 
 import org.main.math.Vector;
+import org.main.model.Group;
 import org.main.model.Model;
 import org.main.model.Polygon;
 import org.main.reader.exeptions.*;
@@ -27,6 +28,8 @@ public class ObjReader {
     private static final String COMMENT_TOKEN = "#";
     private static final String GROUP_TOKEN = "g";
     private static final Model model = new Model();
+    private static Group currentGroup = null;
+    private static int polygonIndex = 0;
     private static int lineIndex = 0;
 
     public static Model readFile(String pathOfFile) {
@@ -55,6 +58,7 @@ public class ObjReader {
                 case TEXTURE_VERTEX_TOKEN -> model.addTextureVertex(parseTextureVector(wordsWithoutToken));
                 case NORMAL_TOKEN -> model.addNormal(parseVector(wordsWithoutToken, TypeOfVector.NORMAL_VECTOR));
                 case FACE_TOKEN -> processPolygon(wordsWithoutToken);
+                case GROUP_TOKEN -> handleGroup(wordsWithoutToken);
                 default -> throw new TokenException(lineIndex);
             }
 
@@ -178,5 +182,23 @@ public class ObjReader {
             }
         }
         model.addPolygon(polygon);
+        if (currentGroup != null) {
+            currentGroup.addNewIndex(polygonIndex);
+        }
+        polygonIndex++;
+    }
+    protected static void handleGroup(String[] wordsWithoutToken) {
+        if (wordsWithoutToken.length == 0) {
+             throw new GroupException(lineIndex);
+        }
+        if (currentGroup != null) {
+            model.addGroup(currentGroup);
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String item: wordsWithoutToken) {
+            sb.append(item).append(" ");
+        }
+        sb.trimToSize();
+        currentGroup = new Group(sb.toString());
     }
 }
